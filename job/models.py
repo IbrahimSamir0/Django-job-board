@@ -1,14 +1,8 @@
-from distutils.command.upload import upload
-from email.policy import default
-from enum import auto
-from pydoc import describe
-from random import choices
-from statistics import mode
-from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
-JOB_TYPE=(
+JOB_TYPE=( 
     ('Full Time','Full Time'),
     ('Part Time','Part Time'),
 )
@@ -20,6 +14,7 @@ def image_upload(instance, filename):
 # Create your models here.
 class Job(models.Model):
     # title
+    owner = models.ForeignKey(User, verbose_name=("job_owner"), on_delete=models.CASCADE)
     title = models.CharField(max_length=100)    
     # location
     job_type =models.CharField(max_length=20,  choices=JOB_TYPE)
